@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <title>ChatCord App</title>
+  </head>
+  <body>
+    <div class="join-container">
+      <header class="join-header">
+        <h1><img src="./src/messenger.png" class="room-image" /> Chat Room</h1>
+      </header>
+      <main class="join-main">
+        <form action="chat.html">
+          <div class="form-control-input">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required="required"
+            /><span>First Name</span>
+          </div>
+          <div class="form-control">
+            <select name="room" id="room" class="select-box">
+              <option value="">Room Name</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="Python">Python</option>
+              <option value="PHP">PHP</option>
+              <option value="C#">C#</option>
+              <option value="Ruby">Ruby</option>
+              <option value="Java">Java</option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Join Chat</button>
+          <a href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>Join
+          </a>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
