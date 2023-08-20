@@ -9,6 +9,7 @@ const { username, room } = Qs.parse(location.search, {
 });
 
 const socket = io();
+
 //Join ChatRoom
 socket.emit("joinRoom", { username, room });
 
@@ -19,7 +20,6 @@ socket.on("roomUsers", ({ room, users }) => {
 });
 
 socket.on("message", (message) => {
-  console.log(username, room);
   outputMessage(message);
 
   //Scroll Down
@@ -32,7 +32,6 @@ chatForm.addEventListener("submit", (e) => {
 
   //Get message text
   const msg = e.target.elements.msg.value;
-  console.log(msg);
 
   //Emit message to server
   socket.emit("chatMessage", msg);

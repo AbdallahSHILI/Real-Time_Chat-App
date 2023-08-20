@@ -279,16 +279,6 @@ a {
   box-shadow: 0 20px 0 50px rgb(255 255 255 /5%);
 }
 
-a:before {
-  position: absolute;
-  width: 50%;
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  content: "";
-  background: #000;
-}
-
 a span:nth-child(1) {
   position: absolute;
   width: 100%;

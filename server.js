@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const http = require("http");
-const exp = require("constants");
 const socketio = require("socket.io");
 const formatMessage = require("./utils/messages");
 const {
@@ -22,15 +21,18 @@ const botName = "BotName";
 
 //run when user is connects
 io.on("connection", (socket) => {
-  socket.on("joinRoom", ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+  socket.on("joinRoom", async ({ username, room }) => {
+    const user = await userJoin(socket.id, username, room);
     socket.join(user.room);
 
     //welcome when current user connects
-    socket.emit("message", formatMessage(botName, "welcome to ChatRoom !"));
+    await socket.emit(
+      "message",
+      formatMessage(botName, "welcome to ChatRoom !")
+    );
 
     //Broadcast to everyone
-    socket.broadcast
+    await socket.broadcast
       .to(user.room)
       .emit(
         "message",
@@ -38,28 +40,31 @@ io.on("connection", (socket) => {
       );
 
     //Send users and room info
-    io.to(user.room).emit("roomUsers", {
+    await io.to(user.room).emit("roomUsers", {
       room: user.room,
       users: getRoomUsers(user.room),
     });
   });
+
   //Listen for chat message
-  socket.on("chatMessage", (msg) => {
-    const user = getCurrentUser(socket.id);
-    io.to(user.room).emit("message", formatMessage(user.username, msg));
+  socket.on("chatMessage", async (msg) => {
+    const user = await getCurrentUser(socket.id);
+    await io.to(user.room).emit("message", formatMessage(user.username, msg));
   });
 
   //run when user disconnect
-  socket.on("disconnect", () => {
-    const user = userLeave(socket.id);
+  socket.on("disconnect", async () => {
+    const user = await userLeave(socket.id);
     if (user) {
-      io.to(user.room).emit(
-        "message",
-        formatMessage(botName, `${user.username} has left the ChatRoom`)
-      );
+      await io
+        .to(user.room)
+        .emit(
+          "message",
+          formatMessage(botName, `${user.username} has left the ChatRoom`)
+        );
     }
     //Send users and room info
-    io.to(user.room).emit("roomUsers", {
+    await io.to(user.room).emit("roomUsers", {
       room: user.room,
       users: getRoomUsers(user.room),
     });
